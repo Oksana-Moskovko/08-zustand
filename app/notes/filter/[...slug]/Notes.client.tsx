@@ -8,11 +8,9 @@ import css from "./NotesPage.module.css";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
 import { Note } from "@/types/note";
 import { fetchNotes } from "@/lib/api";
-import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import Link from "next/link";
 
 type NotesPageProps = {
   initialData: {
@@ -38,7 +36,7 @@ const NotesPage = ({ initialData, tag }: NotesPageProps) => {
     updateSearchQuery(value);
   };
 
-  const { data, isError, isSuccess } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ["notes", searchQuery, tag, currentPage],
     queryFn: () =>
       fetchNotes({ search: searchQuery, page: currentPage, perPage: 12 }, tag),
@@ -49,10 +47,6 @@ const NotesPage = ({ initialData, tag }: NotesPageProps) => {
 
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
@@ -66,17 +60,11 @@ const NotesPage = ({ initialData, tag }: NotesPageProps) => {
               onChange={setCurrentPage}
             />
           )}
-          <button className={css.button} onClick={openModal}>
+          <Link className={css.button} href={`/notes/action/create`}>
             Create note +
-          </button>
+          </Link>
         </div>
         {notes.length > 0 && <NoteList notes={notes} />}
-        {isError && <ErrorMessage />}
-        {isModalOpen && (
-          <Modal onClose={closeModal}>
-            <NoteForm onClose={closeModal} />
-          </Modal>
-        )}
       </div>
     </>
   );

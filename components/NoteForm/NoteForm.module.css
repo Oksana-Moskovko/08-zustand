@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    width: 100%;
 }
 
 .formGroup {
@@ -10,17 +11,20 @@
     font-size: 14px;
     font-weight: 500;
     color: #212529;
+    width: 100%;
 }
 
 .input,
 .textarea,
 .select {
+    width: 100%;
     margin-top: 4px;
     padding: 8px 12px;
     font-size: 14px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    resize: none;
+    resize: none; 
+    box-sizing: border-box
 }
 
 .actions {
