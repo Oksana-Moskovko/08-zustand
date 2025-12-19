@@ -3,7 +3,7 @@ import NotesPage from "./Notes.client";
 import { Metadata } from "next";
 
 type NotesProps = {
-  params: { slug: string[] };
+  params: Promise<{ slug: string[] }>;
 };
 
 export async function generateMetadata({
